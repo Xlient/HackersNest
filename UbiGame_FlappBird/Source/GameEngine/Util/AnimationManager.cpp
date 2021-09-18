@@ -57,6 +57,16 @@ void AnimationManager::InitStaticGameAnimations()
 			10,
 			15)
 	);
+
+	m_animDefinitions.push_back
+	(
+		SAnimationDefinition(
+			EAnimationId::PlayerAttackRight,
+			eTexture::Player,
+			sf::Vector2i(5, 4),
+			10,
+			15)
+	);
 }
 
 
