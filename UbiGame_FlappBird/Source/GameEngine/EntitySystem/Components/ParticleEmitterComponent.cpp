@@ -67,7 +67,7 @@ void ParticleEmitterComponent::EmitParticle()
 	particleEntity->SetPos(emitPos);
 	particleEntity->SetSize(m_particleDefinition.m_size);
 
-	animComponent->PlayAnim(m_particleDefinition.m_animId);
+	animComponent->PlayAnim(m_particleDefinition.m_animId, true);
 
 	particleCMP->SetLifeTime(m_particleDefinition.m_lifeTime);
 

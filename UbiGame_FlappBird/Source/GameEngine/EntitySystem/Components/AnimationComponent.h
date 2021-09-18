@@ -13,7 +13,7 @@ namespace GameEngine
 		virtual void OnAddToWorld() override;
 		virtual void OnRemoveFromWorld() override;
 
-		void PlayAnim(EAnimationId::type animId);
+		void PlayAnim(EAnimationId::type animId,bool isLoop);
 		virtual void Update() override;		
 		sf::Vector2i GetWantedTileIndex() const;
 
@@ -22,6 +22,7 @@ namespace GameEngine
 
 	protected:
 		EAnimationId::type m_currentAnim;
+		bool m_isLoopAnim;
 		int m_currentFrame;
 		float m_currentFrameDT;
 	};

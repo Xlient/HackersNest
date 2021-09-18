@@ -48,33 +48,75 @@ void PlayerMovementComponent::Update()
 
 	sf::Vector2f wantedVel = sf::Vector2f(0.f, 0.f);
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-	{
-		wantedVel.x -= playerVel * dt;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-	{
-		wantedVel.x += playerVel * dt;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-	{
-		wantedVel.y -= playerVel * dt;
-		if (m_playerSoundComponent)
-		{
-			m_playerSoundComponent->RequestSound(true);
-		}
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-	{
-		wantedVel.y += playerVel * dt;
-		if (m_playerSoundComponent)
-		{
-			m_playerSoundComponent->RequestSound(false);
-		}
-	}
 
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+		{
+			wantedVel.x -= playerVel * dt;
+			m_arrowKeyPressed = true;
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+		{
+			wantedVel.x += playerVel * dt;
+			m_arrowKeyPressed = true;
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+		{
+			wantedVel.y -= playerVel * dt;
+			m_arrowKeyPressed = true;
+			if (m_playerSoundComponent)
+			{
+				m_playerSoundComponent->RequestSound(true);
+			}
+
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+		{
+			wantedVel.y += playerVel * dt;
+			m_arrowKeyPressed = true;
+			if (m_playerSoundComponent)
+			{
+				m_playerSoundComponent->RequestSound(false);
+			}
+		}
+		else 
+		{
+			if (m_animComponent) 
+			{
+				m_animComponent->PlayAnim(GameEngine::EAnimationId::PlayerMove, true);
+			}
+
+			
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::LControl))
+		{
+			if (m_animComponent)
+			{
+				m_animComponent->PlayAnim(GameEngine::EAnimationId::PlayerJump, true);
+			}
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::LShift))
+		{
+			if (m_animComponent)
+			{
+				m_animComponent->PlayAnim(GameEngine::EAnimationId::PlayerAttackLeft, true);
+				
+			}
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift))
+		{
+			if (m_animComponent)
+			{
+				m_animComponent->PlayAnim(GameEngine::EAnimationId::PlayerAttackRight, false);
+			}
+		}
+	
+	
+	
 	GetEntity()->SetPos(GetEntity()->GetPos() + wantedVel);
 
+
+	// To do 
 	if (wantedVel != sf::Vector2f(0.f, 0.f))
 	{
 		m_flyTimerDt = m_flyTimerMaxTime;
@@ -83,21 +125,8 @@ void PlayerMovementComponent::Update()
 	{
 		m_flyTimerDt -= dt;
 	}
-
-	if (m_animComponent)
-	{
-		if (m_flyTimerDt > 0.f)
-		{
-			if (m_animComponent->GetCurrentAnimation() != GameEngine::EAnimationId::BirdFly)
-			{
-				m_animComponent->PlayAnim(GameEngine::EAnimationId::BirdFly);
-			}
-		}
-		else if(m_animComponent->GetCurrentAnimation() != GameEngine::EAnimationId::BirdIdle)
-		{
-			m_animComponent->PlayAnim(GameEngine::EAnimationId::BirdIdle);
-		}
-	}
+	
+	
 
 	
 	static float rotationVel = 50.f; //Deg/s

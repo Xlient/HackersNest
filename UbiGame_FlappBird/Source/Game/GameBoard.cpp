@@ -20,16 +20,16 @@ GameBoard::GameBoard()
 	
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(m_player);
 	m_player->SetPos(sf::Vector2f(50.f, 50.f));	
-	m_player->SetSize(sf::Vector2f(40.f, 40.f));
+	m_player->SetSize(sf::Vector2f(128.f, 128.f));
 	
 	m_text = new GameEngine::Entity();
 
     GameEngine::GameEngineMain::GetInstance()->AddEntity(m_text);
 	m_text->SetParent(m_player);
-    GameEngine::TextRenderComponent* textRenderComponent = m_text->AddComponent<GameEngine::TextRenderComponent>();
+    /*GameEngine::TextRenderComponent* textRenderComponent = m_text->AddComponent<GameEngine::TextRenderComponent>();
     textRenderComponent->SetFont("arial.ttf");
 	textRenderComponent->SetString("Player!");
-	textRenderComponent->SetZLevel(3);
+	textRenderComponent->SetZLevel(3);*/
 	m_text->SetLocalPosOffset(sf::Vector2f(1.f, 1.f));
 	m_text->SetLocalRotOffset(90.f);
 
@@ -60,7 +60,7 @@ void GameBoard::Update()
 			SpawnNewRandomTiledObstacles();
 		}
 
-		UpdateObstacles(dt);
+		//UpdateObstacles(dt);
 		UpdateBackGround();
 		UpdatePlayerDying();
 	}		
@@ -168,9 +168,9 @@ void GameBoard::CreateBackGround()
 	GameEngine::Entity* bgEntity = new GameEngine::Entity();
 	GameEngine::SpriteRenderComponent* render = bgEntity->AddComponent<GameEngine::SpriteRenderComponent>();
 	render->SetTexture(GameEngine::eTexture::BG);
-	render->SetZLevel(0);
-	bgEntity->SetPos(sf::Vector2f(250.f, 250.f));
-	bgEntity->SetSize(sf::Vector2f(500.f, 500.f));
+	render->SetZLevel(-1);
+	bgEntity->SetPos(sf::Vector2f(350.f, 350.f));
+	bgEntity->SetSize(sf::Vector2f(1280.f, 640.f));
 	GameEngine::GameEngineMain::GetInstance()->AddEntity(bgEntity);
 
 	m_backGround = bgEntity;

@@ -55,18 +55,23 @@ void AnimationComponent::Update()
 	if (m_currentFrameDT > dt_perFrame)
 	{
 		m_currentFrameDT = m_currentFrameDT - dt_perFrame;
-		m_currentFrame++;		
-		if (m_currentFrame >= currDefinition->m_frameCount)
-			m_currentFrame = 0;
+		m_currentFrame++;
+
+		if (m_isLoopAnim) {
+			if (m_currentFrame >= currDefinition->m_frameCount)
+				m_currentFrame = 0;
+		}
+		
 	}
 }
 
 
-void AnimationComponent::PlayAnim(EAnimationId::type animId)
+void AnimationComponent::PlayAnim(EAnimationId::type animId, bool isLoop)
 {
 	m_currentFrame = 0;
 	m_currentAnim = animId;	
 	m_currentFrameDT = 0.f;
+	m_isLoopAnim = isLoop;
 }
 
 
